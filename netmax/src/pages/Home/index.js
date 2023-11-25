@@ -3,6 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import api from "../../services/Api";
 
+import style from "./style";
+
 
 
 export default function Home(){
@@ -46,16 +48,19 @@ export default function Home(){
         )
     }
     return(
-        <View className="container">
-
-            <ScrollView className="lista-filmes" horizontal={true}>
+        <View style={style.container}>
+            <Text style={style.subtitle}>Filmes mais populares</Text>
+            <ScrollView style={style.list} horizontal={true}>
                 {Pop.map((filme)=>{
                     return(
-                        <View key={filme.id}>
-                            <Text>{filme.title}</Text>
-                            <Image style={{width:300, height:300}} source={{uri:`https://image.tmdb.org/t/p/original/${filme.poster_path}`}} alt={filme.title}/>
+                        <View style={style.card} key={filme.id}>
+                            <Text style={style.title}>{filme.title}</Text>
+                            <Image style={style.img}
+                             source={{uri:`https://image.tmdb.org/t/p/original/${filme.poster_path}`}}
+                             
+                            />
                             <Button
-                                title="Go to Details"
+                                title="Detalhes do filme"
                                 onPress={() => {
                                 /* 1. Navigate to the Details route with params */
                                 navigation.navigate('Details', {
@@ -67,16 +72,16 @@ export default function Home(){
                     )
                 })}
             </ScrollView>
-            <ScrollView className="lista-filmes" horizontal={true}>
+            <Text style={style.subtitle}>Filmes mais recentes</Text>
+            <ScrollView style={style.list} horizontal={true}>
                 {now.map((filmes)=>{
                     return(
-                        <View key={filmes.id}>
-                            <Text>{filmes.title}</Text>
-                            <Image style={{width:300, height:300}} source={{uri:`https://image.tmdb.org/t/p/original/${filmes.poster_path}`}} alt={filmes.title}/>
+                        <View style={style.card} key={filmes.id}>
+                            <Text style={style.title}>{filmes.title}</Text>
+                            <Image style={style.img} source={{uri:`https://image.tmdb.org/t/p/original/${filmes.poster_path}`}} alt={filmes.title}/>
                             <Button
-                                title="Go to Details"
+                                title="Detalhes do filme"
                                 onPress={() => {
-                                /* 1. Navigate to the Details route with params */
                                 navigation.navigate('Details', {
                                     filmeId: filmes.id,
                                 });

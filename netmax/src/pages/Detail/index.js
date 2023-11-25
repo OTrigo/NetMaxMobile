@@ -5,6 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 import api from "../../services/Api";
+import style from "./style";
 
 
 
@@ -65,16 +66,15 @@ export default function Detail({ route }){
 
     
     return (
-        <View className="filme-info">
-            <Text>{detail.title}</Text>
-            <Image style={{width:300, height:300}} source={{uri:`https://image.tmdb.org/t/p/original/${detail.backdrop_path}`} }/>
-            <Text>Sinopse:</Text>
-            <Text>{detail.overview}</Text>
-            <Text>Avaliação: {detail.vote_average}</Text>
+        <View style={style.container}>
+            <Text style={style.subtitle}>{detail.title}</Text>
+            <Image style={style.img} source={{uri:`https://image.tmdb.org/t/p/original/${detail.backdrop_path}`} }/>
+            <Text style={[style.subtitle,{alignSelf: 'flex-start'}]}>Sinopse:</Text>
+            <Text style={style.title}>{detail.overview}</Text>
+            <Text style={[style.subtitle,{alignSelf: 'flex-start'}]}>Avaliação: {detail.vote_average}</Text>
 
-
-            <View className="area-buttons">
-                <TouchableOpacity onPress={saveMovie} ><Text>save</Text></TouchableOpacity>
+            <View style={style.btnView}>
+                <TouchableOpacity style={style.btn} onPress={saveMovie} ><Text style={[style.title, {textAlign: 'center'}]}>Save</Text></TouchableOpacity>
             </View>
         </View>
     )
