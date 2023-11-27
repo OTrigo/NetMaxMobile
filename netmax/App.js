@@ -28,6 +28,7 @@ async function handleLogin(email, senha){
 
   if(response.status == 200){
     setLogin(true);
+    console.log(response.data)
     await AsyncStorage.setItem('user', JSON.stringify(response.data.id));
     
   }else{
