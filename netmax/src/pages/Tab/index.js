@@ -21,11 +21,11 @@ export default function TabComp() {
           options={{
             headerShown: false,
             tabBarLabel: "Home",
-            tabBarActiveTintColor: "#F799f5",
+            
             tabBarInactiveBackgroundColor: "black",
             tabBarActiveBackgroundColor: "black",
             tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="home" color={"#F799f5"} size={26} />
+              <MaterialCommunityIcons name="home" color={color} size={26} />
             ),
           }}
         />

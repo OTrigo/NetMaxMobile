@@ -1,10 +1,11 @@
 import TabComp from '../Tab'
-import { Button, TextInput, View, Text, StyleSheet } from 'react-native';
+import { TextInput, View, Text, StyleSheet } from 'react-native';
 import { useState } from 'react';
 import apiUser from '../../services/ApiUser';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 
@@ -44,16 +45,34 @@ export default function Login() {
         borderStyle: 'solid',
         borderWidth: 1,
         borderRadius: 4,
-        marginBottom: '5%'
+        marginBottom: '5%',
+        backgroundColor: "#f0f0f0"
     },
     text:{
         marginStart: '5%',
+        color: "#f0f0f0"
 
+    },
+    card:{
+        marginTop: '50%',
     },
     container:{
-        marginTop: '50%',
-
+        backgroundColor: "#151517",
+        height: "100%",
     },
+    login:{
+        width:'80%',
+        alignSelf: 'center',
+        backgroundColor: '#1010f1',
+        paddingHorizontal: 10,
+        paddingVertical: 9,
+        borderRadius: 5,
+    },
+    create:{
+        textAlign: 'center',
+        color: '#f11010',
+        marginTop: 15
+    }
     })
 
 
@@ -66,19 +85,26 @@ export default function Login() {
 
     return (
         <View style={styles.container}>
-        <StatusBar/>
-        <Text style={styles.text}>Email:</Text>
-        <TextInput style={styles.input} value={email} onChangeText={setEmail}/>
-        <Text style={styles.text}>Senha:</Text>
-        <TextInput style={styles.input} value={senha} onChangeText={setSenha}/>
-        <Button title='logar' onPress={
-            ()=>handleLogin(email, senha )
-        } />
-        <Button title='não tenho conta
-        ' onPress={
-            ()=>navigation.navigate('Create')
-        } />
-        <Text>{message}</Text>
+            <View style={styles.card}>
+                <StatusBar/>
+                <Text style={styles.text}>Email:</Text>
+                <TextInput style={styles.input} value={email} onChangeText={setEmail}/>
+                <Text style={styles.text}>Senha:</Text>
+                <TextInput style={styles.input} value={senha} onChangeText={setSenha}/>
+                <TouchableOpacity style={styles.login} onPress={
+                    ()=>handleLogin(email, senha )
+                }>
+
+                    <Text style={{textAlign: 'center', fontWeight: 'bold'}}>Logar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                 onPress={
+                    ()=>navigation.navigate('Create')
+                }>
+                    <Text style={styles.create}>Não tenho conta</Text>
+                </TouchableOpacity>
+                <Text>{message}</Text>
+            </View>
         </View>
     );
 }
