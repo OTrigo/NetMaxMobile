@@ -73,7 +73,7 @@ export default function TabComp() {
             tabBarActiveBackgroundColor: "black",
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons
-                name="movie-open"
+                name="account"
                 color={color}
                 size={26}
               />

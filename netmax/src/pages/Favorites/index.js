@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import React from 'react';
+import style from './style';
 
 function Favorites(){
     const [filmes, setFilmes] = useState([]);
@@ -30,15 +31,14 @@ function Favorites(){
 
 
     return(
-        <View>
-            <Text>Meus Filmes</Text>
+        <View style={style.container}>
+            <Text style={style.title}>Meus Filmes</Text>
+            {filmes.length === 0 && <Text style={style.subtitle}>Você não possui nenhum filme salvo!</Text>}
             {filmes.map((item)=>{
                     return(
-                        <View key={item.id}>
-                            <Text>{item.title}</Text>
-                            <View>
-                                <Button title="excluir" onPress={()=>excluirFilme(item.id)}/>
-                            </View>
+                        <View style={style.card} key={item.id}>
+                            <Text style={style.subtitle}>{item.title}</Text> 
+                              <TouchableOpacity style={style.del} onPress={()=>excluirFilme(item.id)}><Text>Excluir</Text></TouchableOpacity>
                         </View>
                     )
                 })}
