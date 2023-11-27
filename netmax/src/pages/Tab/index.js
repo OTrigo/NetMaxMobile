@@ -12,7 +12,7 @@ export default function TabComp() {
   const Tab = createBottomTabNavigator();
 
   return (
-    <NavigationContainer>
+    <>
       <StatusBar backgroundColor={"#171515"} />
       <Tab.Navigator>
         <Tab.Screen
@@ -82,6 +82,7 @@ export default function TabComp() {
           component={Perfil}
         />
       </Tab.Navigator>
-    </NavigationContainer>
+    </>
+    
   );
 }
