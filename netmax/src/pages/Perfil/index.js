@@ -5,9 +5,9 @@ import apiUser from '../../services/ApiUser'
 
 const ID_CLIENT = 2;
 
-const response =  await apiUser.get(`/${ID_CLIENT}`);
+// const response =  await apiUser.get(`/${ID_CLIENT}`);
 
-console.log(response);
+// console.log(response);
 
 export default function Perfil(){
     return (
