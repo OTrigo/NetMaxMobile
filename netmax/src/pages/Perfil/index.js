@@ -1,29 +1,42 @@
-import { View } from "react-native"
-import { Text } from "react-native"
-import apiUser from '../../services/ApiUser' 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, useEffect } from "react";
+import { View, Text, TextInput, StatusBar } from "react-native";
+import apiUser from "../../services/ApiUser";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const getUserData = async ()=>{
-    try{
-        const ID_CLIENT = await AsyncStorage.getItem('user')
-        const response = async () =>  await apiUser.get(`/${ID_CLIENT}`);
-        console.log(response)
-    }
-    catch(error){
-        console.error(error)
-    }
-}
+export default function Perfil() {
+  const [userData, setUserData] = useState(null);
 
-getUserData()
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const ID_CLIENT = await AsyncStorage.getItem("user");
+        const response = await apiUser.get(`/${ID_CLIENT}`);
+        setUserData(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-// console.log(response);
+    fetchData();
+  }, []);
 
-export default function Perfil(){
-    return (
-        <View>
-            <Text>
-                {"Poggers"}
-            </Text>
-        </View>
-    )
+  return (
+    <>
+      <StatusBar/>
+      <View>
+        {userData && (
+          <>
+            <Text>Nome:</Text>
+            <TextInput value={userData.nome} />
+            <Text>Email:</Text>
+            <TextInput value={userData.email} />
+            <Text>Senha:</Text>
+            <TextInput value={userData.senha} />
+            <Text>Data de Nascimento: {userData.DataNascimento}</Text>
+            <Text>CPF: {userData.cpf}</Text>
+          </>
+        )}
+      </View>
+    </>
+  );
 }
