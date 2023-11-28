@@ -3,7 +3,7 @@ import { View, Text, TextInput, StatusBar, Button } from "react-native";
 import apiUser from "../../services/ApiUser";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { StyleSheet } from "react-native-web";
+import style from "./style";
 
 export default function Perfil() {
   const [userData, setUserData] = useState(null);
@@ -11,17 +11,15 @@ export default function Perfil() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const ID_CLIENT = await AsyncStorage.getItem("user");
         const response = await apiUser.get(`/${ID_CLIENT}`);
         setUserData(response.data.data);
-        setNome(userData?.nome)
-        setEmail(userData?.email)
-        setSenha(userData?.senha)
+        setNome(userData?.nome);
+        setEmail(userData?.email);
+        setSenha(userData?.senha);
       } catch (error) {
         console.error(error);
       }
@@ -34,92 +32,74 @@ export default function Perfil() {
 
   async function handleUpdate() {
     const ID_CLIENT = await AsyncStorage.getItem("user");
-    const response = await apiUser.put(`user/${ID_CLIENT}`, {
+    const response = await apiUser.put(`${ID_CLIENT}`, {
       nome: nome,
       email: email,
       cpf: userData?.cpf,
       dataNascimento: userData?.dataNascimento,
       senha: senha,
     });
-
-    console.log(response)
+    console.log(response);
     if (response.status == 201) {
       navigation.navigate("Login");
     }
   }
 
-  const styles = StyleSheet.create({
-    input: {
-      height: "8%",
-      width: "90%",
-      alignSelf: "center",
-      borderStyle: "solid",
-      borderWidth: 1,
-      borderRadius: 4,
-      marginBottom: "5%",
-      backgroundColor: "#f0f0f0",
-    },
-    disabledInput:{
-      height: "8%",
-      width: "90%",
-      alignSelf: "center",
-      borderStyle: "solid",
-      borderWidth: 1,
-      borderRadius: 4,
-      marginBottom: "5%",
-      backgroundColor: "#41414d",
-      color: "white"
-    },
-    text: {
-      marginStart: "5%",
-      color: "#f0f0f0",
-    },
-    container: {
-      backgroundColor: "#151517",
-      height: "100%",
-    },
-  });
+  async function handleDelete() {
+    const ID_CLIENT = await AsyncStorage.getItem("user");
+    try {
+      const response = await apiUser.delete(`${ID_CLIENT}`);
+      console.log(response)
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <>
       <StatusBar />
-      <View style={styles.container}>
-        {userData && (
-          <View style={styles.card}>
-            <Text style={styles.text}>Nome:</Text>
+      {userData !== null ? (
+        <View style={style.container}>
+          <View style={style.card}>
+            <Text style={style.text}>Nome:</Text>
             <TextInput
-              style={styles.input}
+              style={style.input}
               value={nome}
               onChangeText={setNome}
             />
-            <Text style={styles.text}>Email:</Text>
+            <Text style={style.text}>Email:</Text>
             <TextInput
-              style={styles.input}
+              style={style.input}
               value={email}
               onChangeText={setEmail}
             />
-            <Text style={styles.text}>CPF:</Text>
+            <Text style={style.text}>CPF:</Text>
             <TextInput
-              style={styles.disabledInput}
+              style={style.disabledInput}
               value={userData.cpf}
               editable={false}
             />
-            <Text style={styles.text}>Data de nascimento:</Text>
+            <Text style={style.text}>Data de nascimento:</Text>
             <TextInput
-              style={styles.disabledInput}
+              style={style.disabledInput}
               placeholder={userData.dataNascimento}
               editable={false}
             />
-            <Text style={styles.text}>Senha:</Text>
+            <Text style={style.text}>Senha:</Text>
             <TextInput
-              style={styles.input}
+              style={style.input}
               value={senha}
               onChangeText={setSenha}
             />
-            <Button title="Criar" onPress={() => handleUpdate()} />
+            <Button title="Atualizar" onPress={() => handleUpdate()} />
+            <Button title="Deletar Conta" onPress={() => handleDelete()} />
           </View>
-        )}
-      </View>
+        </View>
+      ) : (
+        <View style={style.container}>
+          <Text style={style.text}>Carregando informações...</Text>
+        </View>
+      )}
     </>
   );
 }

@@ -8,27 +8,27 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function Detail({ route }) {
   const { filmeId } = route.params || 901362;
   const [detail, setDetail] = useState([]);
-  const [movies, setMovies] = useState([]);
 
   const [loading, setLoading] = useState(true);
 
   const navigation = useNavigation();
 
-  async function saveMovie(){
-        const minhasLista = await AsyncStorage.getItem("@netmax");
-        let filmesSalvos = JSON.parse(minhasLista) || [];
+  async function saveMovie() {
+    const minhasLista = await AsyncStorage.getItem("@netmax");
+    let filmesSalvos = JSON.parse(minhasLista) || [];
 
-        const hasFilme = filmesSalvos.some((filmesSalvos)=>filmesSalvos.id === detail.id);
+    const hasFilme = filmesSalvos.some(
+      (filmesSalvos) => filmesSalvos.id === detail.id
+    );
 
-        if(hasFilme){
-          console.log("Esse filme ja está na lista")
-            return;
-        }
-        filmesSalvos.push(detail);
-        await AsyncStorage.setItem("@netmax", JSON.stringify(filmesSalvos));
-        console.log("Filme salvo com sucesso");
-
+    if (hasFilme) {
+      console.log("Esse filme ja está na lista");
+      return;
     }
+    filmesSalvos.push(detail);
+    await AsyncStorage.setItem("@netmax", JSON.stringify(filmesSalvos));
+    console.log("Filme salvo com sucesso");
+  }
 
   useEffect(() => {
     async function loadFilmes() {
