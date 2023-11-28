@@ -17,9 +17,9 @@ export default function Perfil() {
         const ID_CLIENT = await AsyncStorage.getItem("user");
         const response = await apiUser.get(`/${ID_CLIENT}`);
         setUserData(response.data.data);
-        setNome(userData?.nome);
-        setEmail(userData?.email);
-        setSenha(userData?.senha);
+        setNome(userData.nome);
+        setEmail(userData.email);
+        setSenha(userData.senha);
       } catch (error) {
         console.error(error);
       }
@@ -36,7 +36,7 @@ export default function Perfil() {
       nome: nome,
       email: email,
       cpf: userData?.cpf,
-      dataNascimento: userData?.dataNascimento,
+      DataNascimento: userData?.DataNascimento,
       senha: senha,
     });
     console.log(response);
@@ -82,7 +82,7 @@ export default function Perfil() {
             <Text style={style.text}>Data de nascimento:</Text>
             <TextInput
               style={style.disabledInput}
-              placeholder={userData.dataNascimento}
+              placeholder={userData.DataNascimento}
               editable={false}
             />
             <Text style={style.text}>Senha:</Text>
